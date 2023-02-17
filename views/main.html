@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="name1" />
+    <input type="file" id="file" />
+    <button id="btn">send</button>
+
+    <div>
+      <% for (let img of images){ %>
+
+      <img width="300" src="<%= img.imgpath  %>" alt="image" />
+      <a href="/download/image<%= img.imgpath  %>">download</a>
+      <% } %>
+    </div>
+    <script>
+      btn.onclick = async () => {
+        let formdata = new FormData();
+
+        if (name1.value && file.files.length) {
+          formdata.append("image", file.files[0]);
+          formdata.append("name", name1.value);
+          fetch("http://localhost:5000/upload", {
+            method: "POST",
+            body: formdata,
+          });
+        }
+        window.location = "/";
+      };
+    </script>
+  </body>
+</html>
